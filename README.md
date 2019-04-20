@@ -22,13 +22,13 @@ Florentin et Guillaume
 ```
 - cd tp_in_cup_api/in-cub-api
 - node .
-- [http://localhost:3000](http://localhost:3000)
-- [http://localhost:3000/explorer](http://localhost:3000/explorer)
+- http://localhost:3000
+- http://localhost:3000/explorer
 ```
 
 ### le client
 ```
 - cd tp_in_cup/src
 - ng serve
-- [http://localhost:4200](http://localhost:4200)
+- http://localhost:4200
 ```
