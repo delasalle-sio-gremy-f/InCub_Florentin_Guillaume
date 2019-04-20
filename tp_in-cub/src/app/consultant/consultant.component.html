@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <h1>Liste des différents consultants</h1>
+      </div>
+      <div class="row">
+        <p>Voici la liste de toutes nos consultants de l'incubateur In-Cup.
+          <br>Vous pouvez modifier ou supprimer un consultant existant.</p>
+      </div>
+
+      <div class="row">
+        <table class="table table-striped">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom de Famille</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Description</th>
+            <th scope="col">Actions</th>
+          </tr>
+          <tr *ngFor="let consultant of consultantList | keyvalue">
+            <th scope="row">{{consultant.key}}</th>
+            <td>{{consultant.value.surname}}</td>
+            <td>{{consultant.value.name}}</td>
+            <td>{{consultant.value.description}}</td>
+            <td>
+              <button (click)="displayModifyForm(consultant.value)" class="btn-primary">Modifier</button>
+              <button (click)="delete(consultant.value.id)" class="btn-primary">Supprimer</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-md-8 offset-2">
+        <form *ngIf="displayPutForm" (ngSubmit)="modify()" [formGroup]="consultantPutForm">
+          <div class="form-row">
+            <div class="col-5">
+              <label>Nom de famille : </label><input class="form-control" formControlName="surname">
+              <div class="validator" *ngIf="surnamePutCtrl.dirty && surnamePutCtrl.hasError('required')">Le nom est requis</div>
+              </div>
+            </div>
+          <div class="form-row">
+            <div class="col-5">
+              <label>Prénom : </label><input class="form-control" formControlName="name">
+              <div class="validator" *ngIf="namePutCtrl.dirty && namePutCtrl.hasError('required')">Le prénom est requis</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-12">
+              <label>Description : </label><textarea class="form-control" formControlName="description"></textarea>
+              <div class="validator" *ngIf="descriptionPutCtrl.dirty && descriptionPutCtrl.hasError('required')">La
+                description est requise
+              </div>
+            </div>
+          </div>
+          <button type="submit" [disabled]="consultantPutForm.invalid">Apply</button>
+          <!--<button (click)="reset()">Reset</button>-->
+        </form>
+      </div>
+      <div>
+        <button class="btn-primary"><a [routerLink]="['/index']">Retour Accueil</a></button>
+      </div>
+
+
+    </div>
+  </body>
+</html>

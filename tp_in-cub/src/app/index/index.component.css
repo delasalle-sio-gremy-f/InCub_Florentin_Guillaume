@@ -1,0 +1,38 @@
+h1{
+  color: #5D6A74;
+  text-align: center;
+}
+h2{
+  text-align: center;
+}
+#startupBox{
+  margin: 1em; /*marge extérieure(haut, droite, bas, gauche)*/
+  border: 2px solid #010D17;
+  border-radius: 4px;
+  padding: 1em;
+  background-color: #5D6A74;
+}
+
+.startupCard{
+  margin: 1em; /*marge extérieure(haut, droite, bas, gauche)*/
+  border: 2px solid #010D17;
+  border-radius: 10px;
+  padding: 1em;
+  background-color: #A2A5A6;
+}
+
+#consultantBox{
+  margin: 1em; /*marge extérieure(haut, droite, bas, gauche)*/
+  border: 2px solid #010D17;
+  border-radius: 4px;
+  padding: 1em;
+  background-color: #5D6A74;
+}
+
+.consultantCard{
+  margin: 1em; /*marge extérieure(haut, droite, bas, gauche)*/
+  border: 2px solid #010D17;
+  border-radius: 10px;
+  padding: 1em;
+  background-color: #DAD9D8;
+}

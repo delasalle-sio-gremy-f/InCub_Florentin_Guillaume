@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+  <body>
+    <div class="container">
+      <div class="row">
+        <h1>Liste des différentes startups</h1>
+      </div>
+      <div class="row">
+        <p>Voici la liste de toutes nos startups présentes dans l'incubateur In-Cup.
+          <br>Vous pouvez ajouter une startup en remplissant le formulaire en haut de la page ou encore
+          modifier ou supprimer une startup existante.</p>
+      </div>
+
+      <button class="btn-secondary" (click)="displayCreateForm()">Ajouter une startup</button>
+
+      <div class="col-md-8 offset-2">
+        <form *ngIf="displayAddForm" (ngSubmit)="register()" [formGroup]="startupForm">
+          <div class="form-row">
+            <div class="col-5">
+              <label>Nom de la Startup : </label><input class="form-control" formControlName="name">
+              <div class="validator" *ngIf="nameCtrl.dirty && nameCtrl.hasError('required')">Le nom est requis</div>
+              <div class="validator" *ngIf="nameCtrl.dirty && nameCtrl.hasError('maxLength')">Le nom doit contenir au
+                maximum 20 caractères
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-5">
+              <label>Secteur d'activité : </label><input class="form-control" formControlName="sector">
+              <div class="validator" *ngIf="sectorCtrl.dirty && sectorCtrl.hasError('required')">Le secteur d'activité
+                est
+                requis
+              </div>
+              <div class="validator" *ngIf="sectorCtrl.dirty && sectorCtrl.hasError('maxLength')">Le secteur d'activité
+                doit contenir au maximum 10 caractères
+              </div>
+            </div>
+            <div class="col-5 offset-2">
+              <label>Représentant légal : </label><input class="form-control" formControlName="representative">
+              <div class="validator" *ngIf="representativeCtrl.dirty && representativeCtrl.hasError('required')">Le
+                représentant légal est requis
+              </div>
+              <div class="validator" *ngIf="representativeCtrl.dirty && representativeCtrl.hasError('maxLength')">Le
+                représentant légal doit contenir au maximum 15 caractères
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-6">
+              <label>Nombre de Co-Fondateurs : </label><input class="form-control col-2" type="number"
+                                                              formControlName="nbCoFounders">
+              <div class="validator" *ngIf="coFoundersCtrl.dirty && coFoundersCtrl.hasError('required')">Le champ est
+                requis
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-12">
+              <label>Description : </label><textarea class="form-control" formControlName="description"></textarea>
+              <div class="validator" *ngIf="descriptionCtrl.dirty && descriptionCtrl.hasError('required')">La
+                description est requise
+              </div>
+              <div class="validator" *ngIf="descriptionCtrl.dirty && descriptionCtrl.hasError('maxLength')">Le champ
+                doit contenir au maximum 250 caractères
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-5">
+              <label>Adresse : </label><input class="form-control" formControlName="address">
+              <div class="validator" *ngIf="addressCtrl.dirty && addressCtrl.hasError('maxLength')">L'adresse doit
+                contenir au maximum 15 caractères
+              </div>
+            </div>
+            <div class="col-5 offset-2">
+              <label>Consultant : </label><select class="form-control" formControlName="consultant">
+              <option *ngFor="let consultant of consultantList"
+                      value="{{consultant.surname}}">{{consultant.surname}}</option>
+            </select>
+              <div class="validator" *ngIf="consultantCtrl.dirty && consultantCtrl.hasError('required')">Vous devez
+                choisir un consultant
+              </div>
+            </div>
+          </div>
+          <button type="submit" [disabled]="startupForm.invalid">Register</button>
+          <!--<button (click)="reset()">Reset</button>-->
+        </form>
+
+      </div>
+
+      <table class="table table-striped">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nom</th>
+          <th scope="col">Représentant légal</th>
+          <th scope="col">CoFondateurs</th>
+          <th scope="col">Description</th>
+          <th scope="col">Adresse</th>
+          <th scope="col">Consultant</th>
+          <th scope="col">Actions</th>
+        </tr>
+        <tr *ngFor="let startup of startupList | keyvalue">
+          <th scope="row">{{startup.key}}</th>
+          <td>{{startup.value.name}}</td>
+          <td>{{startup.value.representative}}</td>
+          <td>{{startup.value.nbCoFounders | coFounders}}</td>
+          <td>{{startup.value.description}}</td>
+          <td>{{startup.value.address | address}}</td>
+          <td>{{startup.value.consultant.surname}} {{startup.value.consultant.name}}</td>
+          <td>
+            <button (click)="displayModifyForm(startup.value)" class="btn-secondary">Modifier</button>
+            <button (click)="delete(startup.value.id)" class="btn-secondary">Supprimer</button>
+          </td>
+        </tr>
+      </table>
+
+      <div class="col-md-8 offset-2">
+        <form *ngIf="displayPutForm" (ngSubmit)="modify()" [formGroup]="startupPutForm">
+          <div class="form-row">
+            <div class="col-5">
+              <label>Nom de la Startup : </label><input class="form-control" formControlName="name">
+              <div class="validator" *ngIf="namePutCtrl.dirty && namePutCtrl.hasError('required')">Le nom est requis
+              </div>
+              <div class="validator" *ngIf="namePutCtrl.dirty && namePutCtrl.hasError('maxLength')">Le nom doit contenir
+                au
+                maximum 20 caractères
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-5">
+              <label>Secteur d'activité : </label><input class="form-control" formControlName="sector">
+              <div class="validator" *ngIf="sectorPutCtrl.dirty && sectorPutCtrl.hasError('required')">Le secteur
+                d'activité
+                est
+                requis
+              </div>
+              <div class="validator" *ngIf="sectorPutCtrl.dirty && sectorPutCtrl.hasError('maxLength')">Le secteur
+                d'activité
+                doit contenir au maximum 10 caractères
+              </div>
+            </div>
+            <div class="col-5 offset-2">
+              <label>Représentant légal : </label><input class="form-control" formControlName="representative">
+              <div class="validator" *ngIf="representativePutCtrl.dirty && representativePutCtrl.hasError('required')">
+                Le
+                représentant légal est requis
+              </div>
+              <div class="validator" *ngIf="representativePutCtrl.dirty && representativePutCtrl.hasError('maxLength')">
+                Le
+                représentant légal doit contenir au maximum 15 caractères
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-6">
+              <label>Nombre de Co-Fondateurs : </label><input class="form-control col-2" type="number"
+                                                              formControlName="nbCoFounders">
+              <div class="validator" *ngIf="coFoundersPutCtrl.dirty && coFoundersPutCtrl.hasError('required')">Le champ
+                est
+                requis
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-12">
+              <label>Description : </label><textarea class="form-control" formControlName="description"></textarea>
+              <div class="validator" *ngIf="descriptionPutCtrl.dirty && descriptionPutCtrl.hasError('required')">La
+                description est requise
+              </div>
+              <div class="validator" *ngIf="descriptionPutCtrl.dirty && descriptionPutCtrl.hasError('maxLength')">Le
+                champ
+                doit contenir au maximum 250 caractères
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-5">
+              <label>Adresse : </label><input class="form-control" formControlName="address">
+              <div class="validator" *ngIf="addressPutCtrl.dirty && addressPutCtrl.hasError('maxLength')">L'adresse doit
+                contenir au maximum 15 caractères
+              </div>
+            </div>
+            <div class="col-5 offset-2">
+              <label>Consultant : </label>
+              <select class="form-control" formControlName="consultant">
+                <option *ngFor="let consultant of consultantList"
+                        value="{{consultant.surname}}">{{consultant.surname}}</option>
+              </select>
+              <div class="validator" *ngIf="consultantPutCtrl.dirty && consultantPutCtrl.hasError('required')">Vous
+                devez
+                choisir un consultant
+              </div>
+            </div>
+          </div>
+          <button type="submit" [disabled]="startupPutForm.invalid">Apply</button>
+          <!--<button (click)="reset()">Reset</button>-->
+        </form>
+      </div>
+      <div>
+        <button class="btn-primary"><a [routerLink]="['/index']">Retour Accueil</a></button>
+      </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="container">
+      <h1>Bienvenue sur le site d'In-Cub</h1>
+      <h2>Incubateur de startups et mise en relation avec des consultants.</h2>
+
+      <div id="startupBox">
+        <div class="row">
+          <div *ngFor="let startup of startupList" class="startupCard col">
+            <h3>{{startup.name}}</h3>
+            <p>{{startup.description}}</p>
+            <h5>{{startup.representative}}</h5>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <button class="btn-primary"><a [routerLink]="['/startups']">Consulter</a></button>
+        </div>
+      </div>
+
+      <div id="consultantBox">
+        <div class="row">
+          <div *ngFor="let consultant of consultantList" class="consultantCard col">
+            <h3>{{consultant.name}} {{consultant.surname | uppercase}}</h3>
+            <p>{{consultant.description}}</p>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <button class="btn-primary"><a [routerLink]="['/consultants']">Consulter</a></button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

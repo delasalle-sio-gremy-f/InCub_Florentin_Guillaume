@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <body>
+      <form *ngIf="!displayAddForm" (ngSubmit)="login()" [formGroup]="loginPutForm">
+        <div class="box">
+          <h1>In-Cub Connexion</h1>
+          <div class="form-row">
+              <div class="col-12">
+                <label>adresse mail : </label><input type="email" class="form-control" formControlName="email">
+                <div class="validator" *ngIf="emailPutCtrl.dirty && emailPutCtrl.hasError('required')">L'adresse mail est requis</div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-12">
+                <label>mot de passe : </label><input type="password" class="form-control" formControlName="password">
+                <div class="validator" *ngIf="passwordPutCtrl.dirty && passwordPutCtrl.hasError('required')">Le mot de passe est requis</div>
+              </div>
+            </div>
+          <button type="submit" [disabled]="loginPutForm.invalid">Connexion</button>
+        </div>
+      </form>
+
+      <form *ngIf="displayAddForm" (ngSubmit)="addUser()" [formGroup]="addPutForm">
+        <div class="box">
+          <h1>Créer un compte</h1>
+          <div class="form-row">
+            <div class="col-12">
+              <label>nom : </label><input type="text" class="form-control" formControlName="surname">
+              <div class="validator" *ngIf="surnamePutCtrl.dirty && surnamePutCtrl.hasError('required')">Le nom est requis</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-12">
+              <label>prénom : </label><input type="text" class="form-control" formControlName="name">
+              <div class="validator" *ngIf="namePutCtrl.dirty && namePutCtrl.hasError('required')">Le prénom est requis</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-12">
+              <label>adresse mail : </label><input type="email" class="form-control" formControlName="emailAdd">
+              <div class="validator" *ngIf="emailAddPutCtrl.dirty && emailAddPutCtrl.hasError('required')">L'adresse mail est requis</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-12">
+              <label>mot de passe : </label><input type="password" class="form-control" formControlName="passwordAdd">
+              <div class="validator" *ngIf="passwordAddPutCtrl.dirty && passwordAddPutCtrl.hasError('required')">Le mot de passe est requis</div>
+            </div>
+          </div>
+          <button type="submit" [disabled]="addPutForm.invalid">Connexion</button>
+        </div>
+      </form>
+
+      <button *ngIf="!displayAddForm" (click)="displayPutForm()">Pas de compte</button>
+      <button [routerLink]="['/index']">Continuer sans connexion</button>
+  </body>
+</html>
+  
+  
